@@ -52,7 +52,7 @@ optional arguments:
 pwd:
         print the current working directory
 
-tail:
+tail, log:
         print log of recent requests
 
 cd:

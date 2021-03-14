@@ -314,6 +314,7 @@ aliases = {
     "lst": "list",
     "ls": "dir",
     "l": "list",
+    "log": "tail",
     "q": "exit"
 }
 
