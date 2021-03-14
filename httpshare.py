@@ -38,6 +38,14 @@ def update_address():
         external_ip = f"[{external_ip}]"
     address = f"http://{external_ip}"
 
+
+def format_address():
+    if address.endswith("/"):
+        return f"{address}{secret}/"
+    else:
+        return f"{address}:{port}/{secret}/"
+
+
 # natural_sort() code from https://stackoverflow.com/a/4836734
 # originally from https://blog.codinghorror.com/sorting-for-humans-natural-sort-order/
 def natural_sort(l):
@@ -281,12 +289,19 @@ def command_list():
         names = list(shares.keys())
     print(f"{len(names)} files are being shared")
     for i in natural_sort(names):
-        print(f"{address}:{port}/{secret}/{urllib.parse.quote(i)}")
+        print(f"{format_address()}{urllib.parse.quote(i)}")
 
 def command_stun():
     """identify servers external ip address"""
     update_address()
     print(f"server availible here: {address}:{port}/{secret}/")
+
+
+def command_setaddress(arg):
+    """manually set servers address; a trailing '/' deactivates addition of port number"""
+    global address
+    address = arg
+
 
 def command_help():
     """display list of commands"""
@@ -315,6 +330,7 @@ aliases = {
     "ls": "dir",
     "l": "list",
     "log": "tail",
+    "set": "setaddress",
     "q": "exit"
 }
 
@@ -358,7 +374,7 @@ def main():
     try:
         thread = threading.Thread(target=serv, daemon=True)
         thread.start()
-        print(f"server availible here: {address}:{port}/{secret}/")
+        print(f"server availible here: {format_address()}")
         while True:
             cmd = shlex.split(input(">"))
             if not execute(cmd):

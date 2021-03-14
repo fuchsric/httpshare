@@ -76,6 +76,10 @@ list, l, lst:
 stun:
         identify servers external ip address
 
+setaddress, set:
+        arguments: 1
+        manually set servers address; a trailing '/' deactivates addition of port number
+
 help:
         display list of commands
 ```
