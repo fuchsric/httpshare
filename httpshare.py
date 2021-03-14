@@ -173,9 +173,9 @@ class Handler(BaseHTTPRequestHandler):
                 pass
         if "Range" in self.headers:
             L, R = parse_range(self.headers["Range"])
-            if R is None:
+            if R is None or R >= file_size:
                 R = file_size - 1
-            if L is None or L >= file_size or R >= file_size or L > R:
+            if L is None or L >= file_size or L > R:
                 self.send_error(HTTPStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
                 return
             range_len = R - L + 1
