@@ -349,12 +349,11 @@ def main():
     global port
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--port', default=port, type=int, help='http port')
-    parser.add_argument('-c', nargs='+', action='append', help='execute command on startup', metavar=("COMMAND", "ARGUMENT"))
+    parser.add_argument('-c', nargs='+', default=[], action='append', help='execute command on startup', metavar=("COMMAND", "ARGUMENT"))
     args = parser.parse_args()
     port = args.port
-    if args.c:
-        for cmd in args.c:
-            execute(cmd)
+    for cmd in args.c:
+        execute(cmd)
     try:
         thread = threading.Thread(target=serv, daemon=True)
         thread.start()
