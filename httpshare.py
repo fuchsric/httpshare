@@ -345,7 +345,7 @@ def execute(cmd):
     f = globals().get("command_" + cmd, None)
     if f is None:
         print(f"invalid command \"{cmd}\"")
-        return False
+        return True
     argc = len(signature(f).parameters)
     if len(args) != argc:
         print(f"{cmd} needs {argc} arguments ({len(args)} given)")
